@@ -17,23 +17,19 @@
                 <li>
                     <a href="index.php">Home</a>
                 </li>
-                <?php if (!empty($_SESSION["user"])): //inloggad
-                ?>
+                <?php if (!empty($_SESSION["user"])): ?> <!--Inloggad-->
                     <li>
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
                         <a href="create_post.php">Create Post</a>
                     </li>
-
                     <li>
-                        <!-- logga ut knapp -->
                         <form action="logout.php" method="POST">
                             <button type="submit">Logout</button>
                         </form>
                     </li>
-                <?php else: //utloggad 
-                ?>
+                <?php else: ?> <!--utloggad -->
                     <li>
                         <!-- logga in knapp -->
                         <a href="login.php">Login</a>
