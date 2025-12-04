@@ -3,7 +3,7 @@
     session_start();
     include 'functions/db_connection.php';
 
-    $sth = $dbh->prepare("SELECT id, content, auth_user FROM post");
+    $sth = $dbh->prepare("SELECT post.id, content, auth_user, email FROM post LEFT JOIN auth_user ON post.auth_user=auth_user.id");
     $sth->execute();
     $posts = $sth->fetchAll();
 
@@ -18,8 +18,10 @@
             <?php if (count($posts) > 0): ?>
                 <?php foreach ($posts as $post): ?>
                     <div>
-                        <p><?= $post->auth_user ?></p>
+                        <p hidden><?= $post->id ?></p>
+                        <p><?= $post->email ?></p>
                         <p><?= $post->content ?></p>
+                        <a href="post.php?id=<?= $post->id ?>">View post</a>
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>

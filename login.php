@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sth = $dbh->prepare("SELECT * FROM auth_user WHERE email = :email AND password_hash = :password_hash");
     $sth->execute(["email" => $email, "password_hash" => $password_hash]);
     $existing_user = $sth->fetch();
-    //Login buggar
     if ($existing_user) {
         echo "Welcome";
         $_SESSION["user"] = $existing_user;
