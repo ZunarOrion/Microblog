@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["user"] = 1) {
+if ($_SESSION["user"] == 1) {
     $_SESSION = array();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
@@ -14,7 +14,7 @@ if ($_SESSION["user"] = 1) {
             $params["httponly"]
         );
         session_destroy();
-        header("Location: index.php");
+        header("Location: ../login.php");
         exit;
     };
 };

@@ -25,7 +25,7 @@
                         <a href="create_post.php">Create Post</a>
                     </li>
                     <li>
-                        <form action="logout.php" method="POST">
+                        <form action="functions/logout.php" method="POST">
                             <button type="submit">Logout</button>
                         </form>
                     </li>
