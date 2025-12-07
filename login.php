@@ -20,6 +20,7 @@ include 'functions/db_connection.php';
 // Checking if email and password matches in the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["login-email"];
+    //!!!ADD PASSWORD HASHING!!!
     $password_hash = $_POST["login-password"];
     $sth = $dbh->prepare("SELECT * FROM auth_user WHERE email = :email AND password_hash = :password_hash");
     $sth->execute(["email" => $email, "password_hash" => $password_hash]);

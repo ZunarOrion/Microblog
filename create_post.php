@@ -28,6 +28,7 @@
     include 'components/head.php';
     ?>
 
+    <!-- Post form -->
     <form action="create_post.php" method="POST">
         <h2 type="text" name="content-header">Create a post</h2>
         <textarea type="text" name="content-input" placeholder="Begin your blog"></textarea>
