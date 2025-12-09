@@ -7,7 +7,9 @@ $sth = $dbh->prepare("UPDATE auth_user SET password_hash = :password_hash WHERE 
 $updated = $sth->execute(["password_hash" => $password_hash, "auth_user_id" => $auth_user_id]);
 
 if ($updated) {
-    echo "Password changed";
+    header("Location: ../profile.php?password_changed=1");
+    exit;
 } else {
-    echo "Password was not changed";
+    header("Location: ../profile.php?password_changed=0");
+    exit;
 };

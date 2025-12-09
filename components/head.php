@@ -22,7 +22,7 @@
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="create_post.php">Create Post</a>
+                        <a href="post_create.php">Create Post</a>
                     </li>
                     <li>
                         <form action="functions/logout.php" method="POST">

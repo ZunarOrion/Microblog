@@ -2,14 +2,14 @@
 session_start();
 include 'functions/db_connection.php';
 
-//Finding post
+//Finding posts
 $sth1 = $dbh->prepare("SELECT post.id, auth_user, content, email 
 FROM post LEFT JOIN auth_user 
 ON post.auth_user=auth_user.id WHERE post.id = :post_id");
 $sth1->execute([":post_id" => $_GET['id']]);
 $post = $sth1->fetch();
 if (!$post) {
-    die("No post exists");
+    die("No posts exists");
 };
 
 //Check if user is already liking
@@ -19,14 +19,18 @@ $sth2->execute([":post" => $post->id, ":auth_user" => $_SESSION["user"]->id]);
 $user_has_liked = $sth2->fetch();
 
 //Likes counter
-$sth3 = $dbh->prepare("SELECT COUNT(*) AS like_count FROM post_like 
-WHERE post = :post");
+$sth3 = $dbh->prepare("SELECT COUNT(*) AS like_count 
+FROM post_like WHERE post = :post");
 $sth3->execute([":post" => $post->id]);
 $likecount = $sth3->fetch()->like_count;
 
-$sth4 = $dbh->prepare("SELECT post_comment.id, content, auth_user, post FROM post_comment LEFT JOIN auth_user ON post_comment.auth_user=auth_user.id");
-$sth4->execute();
+//Comments fetcher
+$sth4 = $dbh->prepare("SELECT post_comment.id, content, auth_user, post
+FROM post_comment LEFT JOIN auth_user 
+ON post_comment.auth_user=auth_user.id WHERE post_comment.post = :post_id");
+$sth4->execute([":post_id" => $_GET['id']]);
 $comments = $sth4->fetchAll();
+$comments = array_reverse($comments);
 
 include 'components/head.php';
 var_dump($_SESSION["user"]->id);
@@ -43,7 +47,7 @@ var_dump($_SESSION["user"]->id);
     </form>
     <p><?= $likecount ?> likes</p>
     <!-- Comment form -->
-    <form action="functions/create_comment.php" method="POST">
+    <form action="functions/comment_create.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
         <h2 type="text" name="comment-header">Comment your thoughts about this post</h2>
         <textarea type="text" name="comment-input" placeholder="Write a comment..."></textarea>

@@ -13,12 +13,19 @@ include 'components/head.php';
 <!-- users profile settings -->
 <div>
     <h2>Change your password</h2>
-    <form action="functions/change_password.php" method="POST">
+    <form action="functions/password_change.php" method="POST">
         <label for="change-password">Password</label>
         <input type="password" name="change-password" id="change-password">
         <input type="submit" value="Change password">
     </form>
 
+    <?php if (isset($_GET['password_changed'])): ?>
+        <?php if ($_GET['password_changed'] == 1): ?>
+            <p>Password changed!</p>
+        <?php else: ?>
+            <p>An error occurred</p>
+        <?php endif; ?>
+    <?php endif; ?>
 </div>
 
 <!-- users posts -->
