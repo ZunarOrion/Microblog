@@ -2,14 +2,14 @@
 session_start();
 include 'functions/db_connection.php';
 
-//Finding posts
+//Finding post
 $sth1 = $dbh->prepare("SELECT post.id, auth_user, content, email 
 FROM post LEFT JOIN auth_user 
 ON post.auth_user=auth_user.id WHERE post.id = :post_id");
 $sth1->execute([":post_id" => $_GET['id']]);
 $post = $sth1->fetch();
 if (!$post) {
-    die("No posts exists");
+    die("No post exists");
 };
 
 //Check if user is already liking
@@ -25,15 +25,10 @@ $sth3->execute([":post" => $post->id]);
 $likecount = $sth3->fetch()->like_count;
 
 //Comments fetcher
-$sth4 = $dbh->prepare("SELECT post_comment.id, content, auth_user, post
-FROM post_comment LEFT JOIN auth_user 
-ON post_comment.auth_user=auth_user.id WHERE post_comment.post = :post_id");
-$sth4->execute([":post_id" => $_GET['id']]);
-$comments = $sth4->fetchAll();
-$comments = array_reverse($comments);
+require_once 'functions/comment_fetcher.php';
+$comments = commentFetcher($dbh, (int)$_GET['id']);
 
 include 'components/head.php';
-var_dump($_SESSION["user"]->id);
 ?>
 
 <div>
@@ -57,11 +52,11 @@ var_dump($_SESSION["user"]->id);
     <div>
         <ul>
             <?php if (count($comments) > 0): ?>
-                <?php foreach ($comments as $post): ?>
+                <?php foreach ($comments as $comment): ?>
                     <div>
-                        <p hidden><?= $post->id ?></p>
-                        <p><?= $post->auth_user ?></p>
-                        <p><?= $post->content ?></p>
+                        <p hidden><?= $comment->id ?></p>
+                        <p><?= $comment->auth_user ?></p>
+                        <p><?= $comment->content ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>

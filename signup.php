@@ -4,7 +4,7 @@ include 'functions/db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["signup-email"];
-    $password_hash = $_POST["signup-password"];
+    $password_hash = password_hash($_POST["signup-password"], PASSWORD_DEFAULT);
     $sth1 = $dbh->prepare("SELECT * FROM auth_user WHERE email = :email");
     $sth1->execute(["email" => $email]);
     $existing_user = $sth1->fetchAll();
