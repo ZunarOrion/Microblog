@@ -4,8 +4,9 @@ include 'functions/db_connection.php';
 
 //Finding post
 $sth1 = $dbh->prepare("SELECT post.id, auth_user, content, email 
-FROM post LEFT JOIN auth_user 
-ON post.auth_user=auth_user.id WHERE post.id = :post_id");
+FROM post 
+LEFT JOIN auth_user ON post.auth_user=auth_user.id 
+WHERE post.id = :post_id");
 $sth1->execute([":post_id" => $_GET['id']]);
 $post = $sth1->fetch();
 if (!$post) {
@@ -13,14 +14,17 @@ if (!$post) {
 };
 
 //Check if user is already liking
-$sth2 = $dbh->prepare("SELECT id FROM post_like 
-WHERE post = :post AND auth_user = :auth_user");
+$sth2 = $dbh->prepare("SELECT id 
+FROM post_like 
+WHERE post = :post 
+AND auth_user = :auth_user");
 $sth2->execute([":post" => $post->id, ":auth_user" => $_SESSION["user"]->id]);
 $user_has_liked = $sth2->fetch();
 
 //Likes counter
 $sth3 = $dbh->prepare("SELECT COUNT(*) AS like_count 
-FROM post_like WHERE post = :post");
+FROM post_like 
+WHERE post = :post");
 $sth3->execute([":post" => $post->id]);
 $likecount = $sth3->fetch()->like_count;
 

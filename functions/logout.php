@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["user"] == 1) {
+if ($_SESSION["user"] == true) {
     $_SESSION = array();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();

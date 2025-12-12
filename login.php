@@ -6,7 +6,8 @@ include 'functions/db_connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["login-email"];
     $password = $_POST["login-password"];
-    $sth = $dbh->prepare("SELECT * FROM auth_user WHERE email = :email");
+    $sth = $dbh->prepare("SELECT * FROM auth_user 
+    WHERE email = :email");
     $sth->execute(["email" => $email]);
     $user = $sth->fetch();
     if (!$user) {

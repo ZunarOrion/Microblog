@@ -2,7 +2,9 @@
 session_start();
 include 'functions/db_connection.php';
 $user_id = 1;
-$sth = $dbh->prepare("SELECT id, content, auth_user FROM post WHERE auth_user = :user_id");
+$sth = $dbh->prepare("SELECT id, content, auth_user 
+FROM post 
+WHERE auth_user = :user_id");
 $sth->execute(["user_id" => $user_id]);
 $posts = $sth->fetchAll();
 

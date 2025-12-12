@@ -8,7 +8,8 @@
             if (empty($contentI)) {
                 echo "Text area is empty";
             } else {
-                $sth = $dbh->prepare("INSERT INTO post (content, auth_user) VALUES (:content, :auth_user)");
+                $sth = $dbh->prepare("INSERT INTO post (content, auth_user) 
+                VALUES (:content, :auth_user)");
                 $sth->bindParam(":content", $contentI);
                 $sth->bindParam(":auth_user", $_SESSION["user"]->id);
                 if ($sth->execute()) {
