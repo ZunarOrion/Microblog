@@ -49,19 +49,19 @@ include 'components/head.php';
     <h1><?= $post->post_title ?></h1>
     <p><?= $post->content ?></p>
     <!-- Like form -->
+    <p><?= $likecount ?> likes</p>
     <form action="functions/post_like.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
         <input type="submit" value="<?= $user_has_liked ? 'Unlike' : 'Like' ?>">
     </form>
-    <p><?= $likecount ?> likes</p>
     <!-- Post creator -->
     <p id="email"><?= $post->email ?></p>
     <!-- Follow form -->
+    <p><?= $followcount ?> followers</p>
     <form action="functions/follow.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
         <input type="submit" value="<?= $user_has_followed ? 'Unfollow' : 'Follow' ?>">
     </form>
-    <p><?= $followcount ?> followers</p>
     <!-- Comment form -->
     <form action="functions/comment_create.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
@@ -76,8 +76,8 @@ include 'components/head.php';
                 <?php foreach ($comments as $comment): ?>
                     <div>
                         <p hidden><?= $comment->id ?></p>
-                        <p id="email"><?= $comment->email ?></p>
                         <p><?= $comment->content ?></p>
+                        <p id="email">Made by: <?= $comment->email ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>

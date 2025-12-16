@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'functions/db_connection.php';
+
+//Finding users posts
 $sth = $dbh->prepare("SELECT post.id, content, auth_user, auth_user.email 
 FROM post
 LEFT JOIN auth_user
@@ -9,11 +11,16 @@ WHERE auth_user = :user_id");
 $sth->execute(["user_id" => $_SESSION["user"]]);
 $posts = $sth->fetchAll();
 
+//Followers counter
+require 'functions/follows_counter.php';
+$followcount = followCounter($dbh, (int)$_SESSION['user']);
+
 $title = "Profile";
 include 'components/head.php';
 ?>
 
 <h1>Your Profile</h1>
+<p>You have <?= $followcount ?> followers</p>
 <!-- users profile settings -->
 <div>
     <h2>Change your password</h2>
