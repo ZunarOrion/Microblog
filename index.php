@@ -3,7 +3,7 @@ session_start();
 include 'functions/db_connection.php';
 
 // Showing posts
-$sth = $dbh->prepare("SELECT post.id, post_title, auth_user, email 
+$sth = $dbh->prepare("SELECT post.id, post_title, auth_user, email, created_at, updated_at
     FROM post 
     LEFT JOIN auth_user ON post.auth_user=auth_user.id");
 $sth->execute();
@@ -25,6 +25,7 @@ include 'components/head.php';
                     <p hidden><?= $post->id ?></p>
                     <p id="title"><?= $post->post_title ?></p>
                     <p id="email">Made by: <?= $post->email ?></p>
+                    <p>Posted at: <?= $post->created_at ?></p>
                     <p>Likes: <?= $likecount = likeCounter($dbh, $post->id); ?></p>
                     <a href="post.php?id=<?= $post->id ?>">View post</a>
                 </div>

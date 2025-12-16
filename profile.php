@@ -3,7 +3,7 @@ session_start();
 include 'functions/db_connection.php';
 
 //Finding users posts
-$sth = $dbh->prepare("SELECT post.id, content, auth_user, auth_user.email 
+$sth = $dbh->prepare("SELECT post.id, content, auth_user, auth_user.email, created_at, updated_at 
 FROM post
 LEFT JOIN auth_user
 ON post.auth_user=auth_user.id
@@ -48,7 +48,7 @@ include 'components/head.php';
         <?php if (count($posts) > 0): ?>
             <?php foreach ($posts as $post): ?>
                 <div>
-                    <p id="email"><?= $post->email ?></p>
+                    <p>Posted at: <?= $post->created_at ?></p>
                     <p><?= $post->content ?></p>
                 </div>
             <?php endforeach; ?>

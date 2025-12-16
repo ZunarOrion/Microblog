@@ -3,7 +3,7 @@ session_start();
 include 'functions/db_connection.php';
 
 //Finding post
-$sth1 = $dbh->prepare("SELECT post.id, auth_user, post_title, content, email 
+$sth1 = $dbh->prepare("SELECT post.id, auth_user, post_title, content, email, created_at, updated_at 
 FROM post 
 LEFT JOIN auth_user ON post.auth_user=auth_user.id 
 WHERE post.id = :post_id");
@@ -48,6 +48,7 @@ include 'components/head.php';
     <p hidden><?= $post->id ?></p>
     <h1><?= $post->post_title ?></h1>
     <p><?= $post->content ?></p>
+    <p>Posted at: <?= $post->created_at ?></p>
     <!-- Like form -->
     <p><?= $likecount ?> likes</p>
     <form action="functions/post_like.php" method="POST">
@@ -78,6 +79,7 @@ include 'components/head.php';
                         <p hidden><?= $comment->id ?></p>
                         <p><?= $comment->content ?></p>
                         <p id="email">Made by: <?= $comment->email ?></p>
+                        <p>Posted at: <?= $post->created_at ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>
