@@ -3,7 +3,7 @@ session_start();
 include 'functions/db_connection.php';
 
 //Finding post
-$sth1 = $dbh->prepare("SELECT post.id, auth_user, content, email 
+$sth1 = $dbh->prepare("SELECT post.id, auth_user, post_title, content, email 
 FROM post 
 LEFT JOIN auth_user ON post.auth_user=auth_user.id 
 WHERE post.id = :post_id");
@@ -13,20 +13,29 @@ if (!$post) {
     die("No post exists");
 };
 
-//Check if user is already liking
+//Check if user is already liking and changes button accrodingly 
 $sth2 = $dbh->prepare("SELECT id 
 FROM post_like 
 WHERE post = :post 
 AND auth_user = :auth_user");
-$sth2->execute([":post" => $post->id, ":auth_user" => $_SESSION["user"]->id]);
+$sth2->execute([":post" => $post->id, ":auth_user" => $_SESSION["user"]]);
 $user_has_liked = $sth2->fetch();
 
 //Likes counter
-$sth3 = $dbh->prepare("SELECT COUNT(*) AS like_count 
-FROM post_like 
-WHERE post = :post");
-$sth3->execute([":post" => $post->id]);
-$likecount = $sth3->fetch()->like_count;
+require 'functions/likes_counter.php';
+$likecount = likeCounter($dbh, (int)$_GET['id']);
+
+//Check if user is already following and changes button accrodingly 
+$sth3 = $dbh->prepare("SELECT id 
+FROM follow 
+WHERE followed = :followed 
+AND follower = :follower");
+$sth3->execute([":followed" => $post->id, ":follower" => $_SESSION["user"]]);
+$user_has_followed = $sth3->fetch();
+
+//Followers counter
+require 'functions/follows_counter.php';
+$followcount = followCounter($dbh, (int)$_GET['id']);
 
 //Comments fetcher
 require_once 'functions/comment_fetcher.php';
@@ -37,7 +46,7 @@ include 'components/head.php';
 
 <div>
     <p hidden><?= $post->id ?></p>
-    <p><?= $post->email ?></p>
+    <h1><?= $post->post_title ?></h1>
     <p><?= $post->content ?></p>
     <!-- Like form -->
     <form action="functions/post_like.php" method="POST">
@@ -45,6 +54,14 @@ include 'components/head.php';
         <input type="submit" value="<?= $user_has_liked ? 'Unlike' : 'Like' ?>">
     </form>
     <p><?= $likecount ?> likes</p>
+    <!-- Post creator -->
+    <p id="email"><?= $post->email ?></p>
+    <!-- Follow form -->
+    <form action="functions/follow.php" method="POST">
+        <input type="text" name="post" value="<?= $post->id ?>" hidden>
+        <input type="submit" value="<?= $user_has_followed ? 'Unfollow' : 'Follow' ?>">
+    </form>
+    <p><?= $followcount ?> followers</p>
     <!-- Comment form -->
     <form action="functions/comment_create.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
@@ -59,7 +76,7 @@ include 'components/head.php';
                 <?php foreach ($comments as $comment): ?>
                     <div>
                         <p hidden><?= $comment->id ?></p>
-                        <p><?= $comment->auth_user ?></p>
+                        <p id="email"><?= $comment->email ?></p>
                         <p><?= $comment->content ?></p>
                     </div>
                 <?php endforeach; ?>

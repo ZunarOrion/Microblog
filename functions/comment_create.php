@@ -5,11 +5,12 @@ if ($_SESSION["user"]) {
         include 'db_connection.php';
         $commentI = $_POST['comment-input'];
         if (empty($commentI)) {
-            echo "Text area is empty";
+            header("Location: ../post.php?id=" . $_POST["post"]);
+            exit;
         } else {
             $sth = $dbh->prepare("INSERT INTO post_comment (content, post, auth_user) 
             VALUES (:content, :post, :auth_user)");
-            $sth->execute([":content" => $commentI, ":post" => $_POST["post"], ":auth_user" => $_SESSION["user"]->id]);
+            $sth->execute([":content" => $commentI, ":post" => $_POST["post"], ":auth_user" => $_SESSION["user"]]);
             header("Location: ../post.php?id=" . $_POST["post"]);
             exit;
         };

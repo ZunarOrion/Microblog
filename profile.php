@@ -1,17 +1,19 @@
 <?php
 session_start();
 include 'functions/db_connection.php';
-$user_id = 1;
-$sth = $dbh->prepare("SELECT id, content, auth_user 
-FROM post 
+$sth = $dbh->prepare("SELECT post.id, content, auth_user, auth_user.email 
+FROM post
+LEFT JOIN auth_user
+ON post.auth_user=auth_user.id
 WHERE auth_user = :user_id");
-$sth->execute(["user_id" => $user_id]);
+$sth->execute(["user_id" => $_SESSION["user"]]);
 $posts = $sth->fetchAll();
 
 $title = "Profile";
 include 'components/head.php';
 ?>
 
+<h1>Your Profile</h1>
 <!-- users profile settings -->
 <div>
     <h2>Change your password</h2>
@@ -22,11 +24,13 @@ include 'components/head.php';
     </form>
 
     <?php if (isset($_GET['password_changed'])): ?>
-        <?php if ($_GET['password_changed'] == 1): ?>
+        <?php if ($_GET['password_changed'] == true): ?>
             <p>Password changed!</p>
         <?php else: ?>
             <p>An error occurred</p>
         <?php endif; ?>
+    <?php else: ?>
+        <p>Password input is empty!</p>
     <?php endif; ?>
 </div>
 
@@ -37,7 +41,7 @@ include 'components/head.php';
         <?php if (count($posts) > 0): ?>
             <?php foreach ($posts as $post): ?>
                 <div>
-                    <p><?= $post->auth_user ?></p>
+                    <p id="email"><?= $post->email ?></p>
                     <p><?= $post->content ?></p>
                 </div>
             <?php endforeach; ?>

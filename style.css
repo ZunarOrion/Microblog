@@ -35,3 +35,7 @@ nav li form button {
     font-size: 1em;
     padding: 0;
 }
+
+#email {
+    font-size: 1.2rem;
+}

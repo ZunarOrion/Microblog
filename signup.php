@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sth1->execute(["email" => $email]);
     $existing_user = $sth1->fetchAll();
     if ($existing_user) {
-        echo "Email already exitst";
+        $error = "Email is already taken";
     } else {
         $sth2 = $dbh->prepare("INSERT INTO auth_user (email, password_hash) 
         VALUES (:email, :password_hash)");
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: login.php");
         exit;
     };
-}
+};
 
 $title = "Signup";
 include 'components/head.php';
@@ -36,6 +36,9 @@ include 'components/head.php';
         <input type="password" name="signup-password" id="signup-password">
     </div>
     <button type="submit">Signup</button>
+    <?php if (!empty($error)): ?>
+        <p><?= htmlspecialchars($error); ?></p>
+    <?php endif; ?>
 </form>
 
 <?php include 'components/footer.php'; ?>
