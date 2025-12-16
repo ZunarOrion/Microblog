@@ -49,7 +49,12 @@ include 'components/head.php';
             <?php foreach ($posts as $post): ?>
                 <div>
                     <p>Posted at: <?= $post->created_at ?></p>
-                    <p><?= $post->content ?></p>
+                    <p>Updated at: <?= $post->updated_at ?></p>
+                    <form action="functions/post_edit.php" method="POST">
+                        <input type="hidden" name="post" value="<?= $post->id ?>">
+                        <textarea type="text" name="edit-input" required><?= htmlspecialchars($post->content) ?></textarea>
+                        <button type="submit">Edit post</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         <?php endif ?>

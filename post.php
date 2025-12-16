@@ -49,6 +49,7 @@ include 'components/head.php';
     <h1><?= $post->post_title ?></h1>
     <p><?= $post->content ?></p>
     <p>Posted at: <?= $post->created_at ?></p>
+    <p>Updated at: <?= $post->updated_at ?></p>
     <!-- Like form -->
     <p><?= $likecount ?> likes</p>
     <form action="functions/post_like.php" method="POST">

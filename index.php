@@ -26,6 +26,7 @@ include 'components/head.php';
                     <p id="title"><?= $post->post_title ?></p>
                     <p id="email">Made by: <?= $post->email ?></p>
                     <p>Posted at: <?= $post->created_at ?></p>
+                    <p>Updated at: <?= $post->updated_at ?></p>
                     <p>Likes: <?= $likecount = likeCounter($dbh, $post->id); ?></p>
                     <a href="post.php?id=<?= $post->id ?>">View post</a>
                 </div>
