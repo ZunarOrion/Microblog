@@ -1,33 +1,209 @@
-header {
+/* Global */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between; /* Space: left | center | right */
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.posted-at,
+.updated-at {
+    font-size: 12px;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    color: white;
+    padding: 1rem 2rem;
+}
+
+.nav-left {
+    flex: 0 0 auto;
+}
+.nav-right {
+    display: flex;
+    justify-content: left;
+}
+
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-center ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-center a,
+.logo {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-left button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Index page */
+.content {
+    width: 100%;
+    max-width: 800px;
+}
+
+.post-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.post-card .title {
+    font-size: 1.4rem;
+    color: #333;
+    text-decoration: none;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* Profile page */
+.profile-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile-page {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Comments */
+.comments {
+    margin-top: 2rem;
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+}
+
+.comment {
+    background: #f9f9f9;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Login, Signup and Create post */
+form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+form div {
+    margin-bottom: 1rem;
+}
+
+input,
+textarea,
+button {
+    width: 100%;
+    padding: 0.6rem;
+}
+
+button {
+    background: #222;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+
+
+
+
+
+/*header {
+    display: flex;
+    justify-content: space-between;  Space: left | center | right 
     align-items: center;
     padding: 10px 20px;
     background: #f5f5f5;
 }
 
-/* Remove default list styling */
+ Remove default list styling 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px; /* spacing between items */
+    gap: 20px;  spacing between items 
     padding: 0;
     margin: 0;
 }
 
-/* Make the whole menu area centered */
+ Make the whole menu area centered 
 nav {
-    flex: 1; /* makes nav stretch */
+    flex: 1;  makes nav stretch 
     display: flex;
     justify-content: center;
 }
 
-/* Logo styling */
+ Logo styling 
 header h1 {
     margin: 0;
 }
 
-/* Ensure logout button aligns like links */
+ Ensure logout button aligns like links 
 nav li form button {
     background: none;
     border: none;
@@ -36,6 +212,7 @@ nav li form button {
     padding: 0;
 }
 
-#title {
+.title {
     font-size: 1.2rem;
 }
+*/

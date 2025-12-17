@@ -33,8 +33,18 @@
     <!-- Post form -->
     <form action="post_create.php" method="POST">
         <h2 type="text" name="content-header">Create a post</h2>
-        <textarea type="text" name="title-input" placeholder="Put a title on your blog"></textarea>
-        <textarea type="text" name="content-input" placeholder="Begin your blog"></textarea>
+        <div>
+            <div>
+                <label for="title-input">Write a title</label>
+            </div>
+            <textarea rows="1" cols="50" type="text" name="title-input" placeholder="Put a title on your blog"></textarea>
+        </div>
+        <div>
+            <div>
+                <label for="content-input">Begin your blog</label>
+            </div>
+            <textarea rows="4" cols="50" type="text" name="content-input" placeholder="Begin your blog"></textarea>
+        </div>
         <button type="submit">Create</button>
         <?php if (!empty($error)): ?>
             <p><?= htmlspecialchars($error); ?></p>

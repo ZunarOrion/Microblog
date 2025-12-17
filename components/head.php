@@ -11,11 +11,11 @@
 </head>
 
 <body>
-    <header>
-        <h1>
-            <a href="index.php">Logo</a>
-        </h1>
-        <nav>
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.php" class="logo">Logo</a>
+        </div>
+        <nav class="nav-center">
             <ul>
                 <li>
                     <a href="index.php">Home</a>
@@ -27,14 +27,8 @@
                     <li>
                         <a href="post_create.php">Create Post</a>
                     </li>
-                    <li>
-                        <form action="functions/logout.php" method="POST">
-                            <button type="submit">Logout</button>
-                        </form>
-                    </li>
                 <?php else: ?> <!--utloggad -->
                     <li>
-                        <!-- logga in knapp -->
                         <a href="login.php">Login</a>
                     </li>
                     <li>
@@ -43,4 +37,12 @@
                 <?php endif ?>
             </ul>
         </nav>
+        <div class="nav-right">
+            <?php if (!empty($_SESSION["user"])): ?>
+                <form action="functions/logout.php" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+            <?php endif; ?>
+        </div>
     </header>
+    <main>

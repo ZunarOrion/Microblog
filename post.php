@@ -44,26 +44,34 @@ $comments = commentFetcher($dbh, (int)$_GET['id']);
 include 'components/head.php';
 ?>
 
-<div>
+<div class="post-card">
     <p hidden><?= $post->id ?></p>
-    <h1><?= $post->post_title ?></h1>
-    <p><?= $post->content ?></p>
-    <p>Posted at: <?= $post->created_at ?></p>
-    <p>Updated at: <?= $post->updated_at ?></p>
-    <!-- Like form -->
-    <p><?= $likecount ?> likes</p>
-    <form action="functions/post_like.php" method="POST">
-        <input type="text" name="post" value="<?= $post->id ?>" hidden>
-        <input type="submit" value="<?= $user_has_liked ? 'Unlike' : 'Like' ?>">
-    </form>
-    <!-- Post creator -->
-    <p id="email"><?= $post->email ?></p>
-    <!-- Follow form -->
-    <p><?= $followcount ?> followers</p>
-    <form action="functions/follow.php" method="POST">
-        <input type="text" name="post" value="<?= $post->id ?>" hidden>
-        <input type="submit" value="<?= $user_has_followed ? 'Unfollow' : 'Follow' ?>">
-    </form>
+    <h1 class="title"><?= htmlspecialchars($post->post_title, ENT_QUOTES, 'UTF-8') ?></h1>
+    <div>
+        <div><?= htmlspecialchars($post->content, ENT_QUOTES, 'UTF-8') ?></div>
+        <div>
+            <p class="posted-at">Posted at: <?= $post->created_at ?></p>
+            <p class="updated-at">Updated at: <?= $post->updated_at ?></p>
+        </div>
+        <div>
+            <!-- Like form -->
+            <p><?= $likecount ?> likes</p>
+            <form action="functions/post_like.php" method="POST">
+                <input type="text" name="post" value="<?= $post->id ?>" hidden>
+                <input type="submit" value="<?= $user_has_liked ? 'Unlike' : 'Like' ?>">
+            </form>
+            <!-- Follow form -->
+            <p><?= $followcount ?> followers</p>
+            <form action="functions/follow.php" method="POST">
+                <input type="text" name="post" value="<?= $post->id ?>" hidden>
+                <input type="submit" value="<?= $user_has_followed ? 'Unfollow' : 'Follow' ?>">
+            </form>
+        </div>
+        <div>
+            <!-- Post creator -->
+            <p id="email"><?= htmlspecialchars($post->email, ENT_QUOTES, 'UTF-8') ?></p>
+        </div>
+    </div>
     <!-- Comment form -->
     <form action="functions/comment_create.php" method="POST">
         <input type="text" name="post" value="<?= $post->id ?>" hidden>
@@ -72,15 +80,18 @@ include 'components/head.php';
         <button type="submit">Comment</button>
     </form>
     <!-- Comments on the post -->
-    <div>
+    <div class="comments">
+        <h3>Comments</h3>
         <ul>
             <?php if (count($comments) > 0): ?>
                 <?php foreach ($comments as $comment): ?>
-                    <div>
+                    <div class="comment">
                         <p hidden><?= $comment->id ?></p>
-                        <p><?= $comment->content ?></p>
-                        <p id="email">Made by: <?= $comment->email ?></p>
-                        <p>Posted at: <?= $post->created_at ?></p>
+                        <p><?= htmlspecialchars($comment->content, ENT_QUOTES, 'UTF-8') ?></p>
+                        <div>
+                            <p id="email">Made by: <?= htmlspecialchars($comment->email, ENT_QUOTES, 'UTF-8') ?></p>
+                            <p class="posted-at">Posted at: <?= $post->created_at ?></p>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>

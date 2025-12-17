@@ -17,18 +17,26 @@ $title = "Home";
 include 'components/head.php';
 ?>
 
-<div>
-    <ul>
+<div class="content">
+    <ul class="post-list">
         <?php if (count($posts) > 0): ?>
             <?php foreach ($posts as $post): ?>
-                <div>
+                <div class="post-card">
                     <p hidden><?= $post->id ?></p>
-                    <p id="title"><?= $post->post_title ?></p>
-                    <p id="email">Made by: <?= $post->email ?></p>
-                    <p>Posted at: <?= $post->created_at ?></p>
-                    <p>Updated at: <?= $post->updated_at ?></p>
-                    <p>Likes: <?= $likecount = likeCounter($dbh, $post->id); ?></p>
-                    <a href="post.php?id=<?= $post->id ?>">View post</a>
+                    <div>
+                        <div>
+                            <a class="title" href="post.php?id=<?= $post->id ?>">
+                                <?= $post->post_title ?></a>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Likes: <?= $likecount = likeCounter($dbh, $post->id); ?></p>
+                        <div>
+                            <p>Made by: <?= $post->email ?></p>
+                            <p class="posted-at">Posted at: <?= $post->created_at ?></p>
+                            <p class="updated-at">Updated at: <?= $post->updated_at ?></p>
+                        </div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         <?php endif ?>
