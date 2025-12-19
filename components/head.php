@@ -12,9 +12,6 @@
 
 <body>
     <header class="navbar">
-        <div class="nav-left">
-            <a href="index.php" class="logo">Logo</a>
-        </div>
         <nav class="nav-center">
             <ul>
                 <li>
