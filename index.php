@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!$_SESSION["user"]) {
+    header("Location: login.php");
+};
 include 'functions/db_connection.php';
 
 // Showing posts
